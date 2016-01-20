@@ -1,7 +1,7 @@
 {
   "name": "Weapon",
-  "base": "AbstractItem",
   "plural": "weapons",
+  "base": "AbstractItem",
   "idInjection": true,
   "options": {
     "validateUpsert": true
