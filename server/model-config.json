@@ -43,5 +43,9 @@
   "Manufacturer": {
     "dataSource": "mongoDb",
     "public": true
+  },
+  "DamageType": {
+    "dataSource": "mongoDb",
+    "public": true
   }
 }

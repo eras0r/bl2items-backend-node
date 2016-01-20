@@ -1,0 +1,35 @@
+{
+  "name": "DamageType",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "sortOrder": {
+      "type": "number",
+      "required": true
+    },
+    "color": {
+      "type": "string",
+      "required": true
+    },
+    "damageLabel": {
+      "type": "string"
+    },
+    "chanceLabel": {
+      "type": "string"
+    },
+    "additionalText": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
