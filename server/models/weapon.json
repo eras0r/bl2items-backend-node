@@ -1,0 +1,54 @@
+{
+  "name": "Weapon",
+  "base": "AbstractItem",
+  "plural": "weapons",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "damage": {
+      "type": "number",
+      "required": true
+    },
+    "damageMultiplier": {
+      "type": "number",
+      "required": true,
+      "default": 1
+    },
+    "accuracy": {
+      "type": "number",
+      "required": true
+    },
+    "fireRate": {
+      "type": "number",
+      "required": true
+    },
+    "reloadSpeed": {
+      "type": "number",
+      "required": true
+    },
+    "magazineSize": {
+      "type": "number",
+      "required": true
+    },
+    "damageTypeId": {
+      "type": "string",
+      "required": true
+    },
+    "elemDamage": {
+      "type": "number"
+    },
+    "elemChance": {
+      "type": "number"
+    },
+    "weaponTypeId": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
