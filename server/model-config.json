@@ -47,5 +47,9 @@
   "DamageType": {
     "dataSource": "mongoDb",
     "public": true
+  },
+  "Rarity": {
+    "dataSource": "mongoDb",
+    "public": true
   }
 }
