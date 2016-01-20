@@ -2,5 +2,14 @@
   "db": {
     "name": "db",
     "connector": "memory"
+  },
+  "mongoDb": {
+    "name": "mongoDb",
+    "connector": "mongodb",
+    "host": "127.0.0.1",
+    "port": 27017,
+    "database": "loopback-demo",
+    "username": "loopback",
+    "password": "XuQ64c3LBA"
   }
 }
