@@ -1,0 +1,40 @@
+{
+  "name": "AbstractItem",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "level": {
+      "type": "number",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "manufacturerId": {
+      "type": "string",
+      "required": true
+    },
+    "rarityId": {
+      "type": "string",
+      "required": true
+    },
+    "gibbedCode": {
+      "type": "string",
+      "required": true
+    },
+    "uniqueText": {
+      "type": "string"
+    },
+    "additionalText": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
