@@ -1,5 +1,6 @@
 {
   "name": "DamageType",
+  "plural": "damage-types",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {

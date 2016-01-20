@@ -1,5 +1,6 @@
 {
   "name": "Manufacturer",
+  "plural": "manufacturers",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
