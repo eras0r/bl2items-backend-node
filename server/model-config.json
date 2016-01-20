@@ -31,5 +31,17 @@
   "Role": {
     "dataSource": "db",
     "public": false
+  },
+  "AbstractItem": {
+    "dataSource": "mongoDb",
+    "public": false
+  },
+  "Weapon": {
+    "dataSource": "mongoDb",
+    "public": true
+  },
+  "Manufacturer": {
+    "dataSource": "mongoDb",
+    "public": true
   }
 }
