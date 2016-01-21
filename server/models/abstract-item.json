@@ -34,7 +34,13 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "manufacturer": {
+      "type": "belongsTo",
+      "model": "Manufacturer",
+      "foreignKey": "manufacturerId"
+    }
+  },
   "acls": [],
   "methods": {}
 }
