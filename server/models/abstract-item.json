@@ -39,6 +39,11 @@
       "type": "belongsTo",
       "model": "Manufacturer",
       "foreignKey": "manufacturerId"
+    },
+    "rarity": {
+      "type": "belongsTo",
+      "model": "Rarity",
+      "foreignKey": "rarityId"
     }
   },
   "acls": [],
