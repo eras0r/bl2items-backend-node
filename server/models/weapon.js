@@ -1,3 +1,6 @@
+var relationValidator = require('./../lib/relation-validator.js');
+var app = require('../../server/server');
+
 module.exports = function (Weapon) {
 
   console.log('calling base class validator...');
@@ -7,11 +10,10 @@ module.exports = function (Weapon) {
 
   console.log('performing weapon specific validations...');
 
-  // TODO add relation validations for weapon specific relation (such as weaponTypeId and damageTypeId)
-  //Weapon.validate('manufacturerId', customValidator, {message: 'Manufacturer does not exist'});
-  //function customValidator(err) {
-  //
-  //}
+  Weapon.validateAsync('weaponTypeId', weaponTypeValidator, {message: 'WeaponType does not exist'});
+  function weaponTypeValidator(err, done) {
+    relationValidator.validateRelation('weaponTypeId', this.weaponTypeId, app.models.WeaponType, err, done);
+  }
 
   console.log('performing weapon specific validations... OK');
 
