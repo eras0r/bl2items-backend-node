@@ -12,17 +12,17 @@ module.exports = function (app) {
         "sortOrder": 1
       },
       {
-        "name": "green",
+        "name": "uncommon",
         "color": "#00ff00",
         "sortOrder": 2
       },
       {
-        "name": "blue",
+        "name": "rare",
         "color": "#2f78ff",
         "sortOrder": 3
       },
       {
-        "name": "purple",
+        "name": "very rare",
         "color": "#9132c8",
         "sortOrder": 4
       },
