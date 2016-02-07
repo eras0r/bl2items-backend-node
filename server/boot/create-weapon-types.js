@@ -15,7 +15,7 @@ module.exports = function (app) {
         "sortOrder": 2
       },
       {
-        "name": "Shotun",
+        "name": "Shotgun",
         "sortOrder": 3
       },
       {
