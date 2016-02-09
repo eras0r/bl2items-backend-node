@@ -1,5 +1,6 @@
 {
   "name": "AbstractItem",
+  "plural": "items",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {

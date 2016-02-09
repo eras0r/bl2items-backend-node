@@ -34,7 +34,7 @@
   },
   "AbstractItem": {
     "dataSource": "mongoDb",
-    "public": false
+    "public": true
   },
   "Weapon": {
     "dataSource": "mongoDb",
