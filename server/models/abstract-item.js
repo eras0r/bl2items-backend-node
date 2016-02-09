@@ -4,7 +4,10 @@ var relationValidator = require('./../lib/relation-validator.js');
 
 module.exports = function (AbstractItem) {
 
-  relationValidator.validateRelation(AbstractItem, 'manufacturerId', 'Manufacturer');
-  relationValidator.validateRelation(AbstractItem, 'rarityId', 'Rarity');
+};
 
+module.exports.validateItem = function (Item) {
+  // setup validation
+  relationValidator.validateRelation(Item, 'manufacturerId', 'Manufacturer');
+  relationValidator.validateRelation(Item, 'rarityId', 'Rarity');
 };
