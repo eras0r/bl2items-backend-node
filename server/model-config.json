@@ -55,5 +55,9 @@
   "WeaponType": {
     "dataSource": "mongoDb",
     "public": true
+  },
+  "Shield": {
+    "dataSource": "db",
+    "public": true
   }
 }

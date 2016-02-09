@@ -1,0 +1,57 @@
+{
+  "name": "Shield",
+  "plural": "shields",
+  "base": "AbstractItem",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "capacity": {
+      "type": "number",
+      "required": true
+    },
+    "rechargeRate": {
+      "type": "number",
+      "required": true
+    },
+    "rechargeDelay": {
+      "type": "number",
+      "required": true
+    },
+    "maxHealth": {
+      "type": "number"
+    },
+    "boosterChance": {
+      "type": "number"
+    },
+    "elementalResistance": {
+      "type": "number"
+    },
+    "absorbChance": {
+      "type": "number"
+    },
+    "ampDamage": {
+      "type": "number"
+    },
+    "ampShotDrain": {
+      "type": "number"
+    },
+    "novaDamage": {
+      "type": "number"
+    },
+    "novaRadius": {
+      "type": "number"
+    },
+    "roidDamage": {
+      "type": "number"
+    },
+    "spikeDamage": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
