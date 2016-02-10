@@ -1,9 +1,7 @@
 'use strict';
 
-var Q = require('q');
-
 var relationValidator = require('./../lib/relation-validator.js');
-var app = require('../../server/server');
+var itemsFinder = require('./../lib/items-finder.js');
 
 module.exports = function (AbstractItem) {
 
@@ -34,31 +32,9 @@ module.exports = function (AbstractItem) {
    */
   AbstractItem.listItems = function (filter, cb) {
 
-    console.log('>>> listItems invoked');
-
-    function loadWeapons(filter) {
-      return app.models.Weapon.find(filter);
-    }
-
-    function loadShields(filter) {
-      return app.models.Shield.find(filter);
-    }
-
-    Q.all([
-        loadWeapons(filter),
-        loadShields(filter)
-      ])
-      .then(function (promiseResults) {
-        var items = [];
-
-        // iterate over the promise Results
-        promiseResults.forEach(function (promiseResult) {
-          // iterate over items
-          promiseResult.forEach(function (item) {
-            items.push(item);
-          });
-        });
-
+    // use the itemsFinder to merge all items
+    itemsFinder.findItems(filter)
+      .then(function (items) {
         cb(null, items);
       })
       .catch(function (error) {
