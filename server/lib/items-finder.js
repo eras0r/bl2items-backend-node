@@ -23,9 +23,9 @@ function loadShields(filter) {
 }
 
 /**
- * Finds all items by applying the given filter.
+ * Counts all items by applying the given filter.
  * @param filter the filter to be applied.
- * @returns {*} a promise which will contain an array of all retrieved items upon fulfillment.
+ * @returns {*} a promise which will contain the number of items which matched the given filter upon fulfillment.
  */
 exports.findItems = function (filter) {
 
@@ -50,6 +50,38 @@ exports.findItems = function (filter) {
     })
     .catch(function (error) {
       console.log('error retrieving items ', error);
+      deferred.reject(error);
+    });
+
+  return deferred.promise;
+
+};
+
+/**
+ * Counts all items by applying the given filter.
+ * @param filter the filter to be applied.
+ * @returns {*} a promise which will contain an array of all retrieved items upon fulfillment.
+ */
+exports.countItems = function (filter) {
+
+  var deferred = Q.defer();
+
+  Q.all([
+      app.models.Weapon.count(filter),
+      app.models.Shield.count(filter)
+    ])
+    .then(function (promiseResults) {
+      var totalCount = 0;
+
+      // iterate over the promise Results
+      promiseResults.forEach(function (count) {
+        totalCount += count;
+      });
+
+      deferred.resolve(totalCount);
+    })
+    .catch(function (error) {
+      console.log('error counting items ', error);
       deferred.reject(error);
     });
 
