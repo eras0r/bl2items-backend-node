@@ -13,7 +13,23 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "items": {
+      "type": "hasMany",
+      "model": "AbstractItem",
+      "foreignKey": ""
+    },
+    "weapons": {
+      "type": "hasMany",
+      "model": "Weapon",
+      "foreignKey": ""
+    },
+    "shields": {
+      "type": "hasMany",
+      "model": "Shield",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }
