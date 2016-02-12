@@ -9,11 +9,17 @@
   "properties": {
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "index": {
+        "unique": true
+      }
     },
     "sortOrder": {
       "type": "number",
-      "required": true
+      "required": true,
+      "index": {
+        "unique": true
+      }
     }
   },
   "validations": [],

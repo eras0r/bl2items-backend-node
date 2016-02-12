@@ -25,7 +25,10 @@
     },
     "gibbedCode": {
       "type": "string",
-      "required": true
+      "required": true,
+      "index": {
+        "unique": true
+      }
     },
     "uniqueText": {
       "type": "string"
