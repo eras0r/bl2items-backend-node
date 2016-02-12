@@ -52,7 +52,7 @@ module.exports = function (AbstractItem) {
       returns: {
         type: 'array',
         // see https://docs.strongloop.com/display/public/LB/Remote+methods#Remotemethods-Settingaremotemethodroute
-        root: true // the array is not wrappe in a json object,
+        root: true // the array is not wrapped in a json object,
       },
       http: {verb: 'get', path: '/'}
     }
