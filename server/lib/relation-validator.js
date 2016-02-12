@@ -95,7 +95,8 @@ exports.ensureNoExsitingRelationsBeforeDelete = function (model) {
           next();
         })
         .catch(function (error) {
-          var errorMsg = util.format('Document cannot be deleted, because there are still other documents referencing to %s with id %s', model.modelName, idToDelete);
+          var errorMsg = util.format('Document cannot be deleted, because there are still other documents' +
+            ' referencing to %s with id %s', model.modelName, idToDelete);
           // throw an error
           var err = new Error(errorMsg);
           err.statusCode = 422;
@@ -126,8 +127,10 @@ function checkForExistingModelRelation(targetModel, idToSearch) {
     })
     .catch(function (error) {
       // TODO allow deletion or not if query could not be executed?
-      console.log('error searching models: ', error);
-      deferred.reject('Errors checking for existing relation for target model %s with id: ', targetModel.modelName, idToSearch);
+      var msg = util.format('Errors checking for existing relation for target model %s with id: %s',
+        targetModel.modelName, idToSearch);
+      console.log(msg);
+      deferred.reject(msg);
     });
 
   return deferred.promise;
