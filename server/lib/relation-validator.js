@@ -4,6 +4,7 @@ var Q = require('q');
 var util = require('util');
 
 var app = require('../../server/server');
+var log = require('./../middleware/logger');
 
 /**
  * Async model validator, that ensures that the there is an existing model within the referenced collection.
@@ -33,7 +34,7 @@ exports.validateRelation = function (validatedCollection, propertyName, targetCo
     // check if a model in the target collection exists
     targetCollection.exists(propertyValue, function (queryErr, exists) {
       if (!exists) {
-        console.log(errorMsg);
+        log.warn('%s cannot be saved, because referenced %s with the id "%s" does not exist.', validatedCollection.modelName, targetCollectionName, propertyValue);
         err();
       }
 
@@ -54,10 +55,6 @@ exports.ensureNoExsitingRelationsBeforeDelete = function (model) {
     if (ctx.where && ctx.where.id) {
       var idToDelete = ctx.where.id;
 
-      //console.log('Going to delete %s matching %j',
-      //  ctx.Model.pluralModelName,
-      //  ctx.where);
-
       // generic test whether related objects exist (based on the models configured relations)
 
       // iterate over relations
@@ -66,41 +63,38 @@ exports.ensureNoExsitingRelationsBeforeDelete = function (model) {
       // create an array of promises for the relation lookups
       var relCountPromises = [];
 
+      log.debug('Looking for relations with target model %s ', model.modelName);
       for (var relKey in relations) {
         if (relations.hasOwnProperty(relKey)) {
           var relation = relations[relKey];
 
-          console.log('found relation with key: ', relKey);
+          log.debug('found relation with target model %s and key %s', model.modelName, relKey);
           var relationType = relation.type;
-          //console.log('relation type: ', relationType);
+          var relationName = relation.name;
+          var modelTo = relation.modelTo;
 
           if (relationType === 'hasMany') {
-            var relationName = relation.name;
-            var modelTo = relation.modelTo;
-            //console.log('================================');
-            console.log('checking relation with name %s linking to model %s', relationName, modelTo.modelName);
-            //console.log('modelTo: ', modelTo.modelName);
-
+            log.debug('Considering relation %s with target model %s for referential integrity checks', relationName, modelTo.modelName);
             relCountPromises.push(checkForExistingModelRelation(modelTo, idToDelete));
-
           }
         }
       }
-      console.log('================================');
 
+      // executing all relation count promises in parallel
       Q.all(relCountPromises)
         .then(function (results) {
-          console.log('No relations found. Manufacturer can be deleted');
+          log.debug('No relations have been found for %s with id', model.modelName, idToDelete);
           // just delete the manufacturer
           next();
         })
         .catch(function (error) {
-          var errorMsg = util.format('Document cannot be deleted, because there are still other documents' +
-            ' referencing to %s with id %s', model.modelName, idToDelete);
-          // throw an error
+          // there are still other documents referencing the document to be deleted -> throwing validation error
+          var errorMsg = util.format('Document cannot be deleted, because there are still other documents referencing to %s with id %s', model.modelName, idToDelete);
+          log.warn(errorMsg);
+
           var err = new Error(errorMsg);
           err.statusCode = 422;
-          console.log(err.toString());
+
           next(err);
         });
 
@@ -111,13 +105,12 @@ exports.ensureNoExsitingRelationsBeforeDelete = function (model) {
 
 function checkForExistingModelRelation(targetModel, idToSearch) {
 
-  console.log('check for existing model relation with model %s and id %s', targetModel.modelName, idToSearch);
+  log.debug('check for existing relations with target model %s and id %s', targetModel.modelName, idToSearch);
   var deferred = Q.defer();
-  // TODO count should be executed in parallel if there are multiple relations
-  console.log('checking for relation of model %s with id %s', targetModel.modelName, idToSearch);
+
   targetModel.count({manufacturerId: idToSearch})
     .then(function (relatedItemsCount) {
-      console.log('number of related items for model %s: %d', targetModel.modelName, relatedItemsCount);
+      log.info('number of related documents for model %s: %d', targetModel.modelName, relatedItemsCount);
       if (relatedItemsCount === 0) {
         deferred.resolve(relatedItemsCount);
       }
@@ -126,11 +119,8 @@ function checkForExistingModelRelation(targetModel, idToSearch) {
       }
     })
     .catch(function (error) {
-      // TODO allow deletion or not if query could not be executed?
-      var msg = util.format('Errors checking for existing relation for target model %s with id: %s',
-        targetModel.modelName, idToSearch);
-      console.log(msg);
-      deferred.reject(msg);
+      log.error('error searching models: ', error);
+      deferred.reject('Errors checking for existing relations for target model %s with id: ', targetModel.modelName, idToSearch);
     });
 
   return deferred.promise;
