@@ -51,7 +51,8 @@ module.exports = function (AbstractItem) {
       accepts: {arg: 'filter', type: 'string'},
       returns: {
         type: 'array',
-        root: true // the array is not wrapped in a json object, see https://docs.strongloop.com/display/public/LB/Remote+methods#Remotemethods-Settingaremotemethodroute
+        // see https://docs.strongloop.com/display/public/LB/Remote+methods#Remotemethods-Settingaremotemethodroute
+        root: true // the array is not wrappe in a json object,
       },
       http: {verb: 'get', path: '/'}
     }

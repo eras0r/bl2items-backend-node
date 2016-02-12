@@ -34,7 +34,8 @@ exports.validateRelation = function (validatedCollection, propertyName, targetCo
     // check if a model in the target collection exists
     targetCollection.exists(propertyValue, function (queryErr, exists) {
       if (!exists) {
-        log.warn('%s cannot be saved, because referenced %s with the id "%s" does not exist.', validatedCollection.modelName, targetCollectionName, propertyValue);
+        log.warn('%s cannot be saved, because referenced %s with the id "%s" does not exist.',
+          validatedCollection.modelName, targetCollectionName, propertyValue);
         err();
       }
 
@@ -74,7 +75,8 @@ exports.ensureNoExsitingRelationsBeforeDelete = function (model) {
           var modelTo = relation.modelTo;
 
           if (relationType === 'hasMany') {
-            log.debug('Considering relation %s with target model %s for referential integrity checks', relationName, modelTo.modelName);
+            log.debug('Considering relation %s with target model %s for referential integrity checks',
+              relationName, modelTo.modelName);
             relCountPromises.push(checkForExistingModelRelation(modelTo, idToDelete));
           }
         }
@@ -89,7 +91,8 @@ exports.ensureNoExsitingRelationsBeforeDelete = function (model) {
         })
         .catch(function (error) {
           // there are still other documents referencing the document to be deleted -> throwing validation error
-          var errorMsg = util.format('Document cannot be deleted, because there are still other documents referencing to %s with id %s', model.modelName, idToDelete);
+          var errorMsg = util.format('Document cannot be deleted, because there are still other documents' +
+            ' referencing to %s with id %s', model.modelName, idToDelete);
           log.warn(errorMsg);
 
           var err = new Error(errorMsg);
@@ -120,7 +123,8 @@ function checkForExistingModelRelation(targetModel, idToSearch) {
     })
     .catch(function (error) {
       log.error('error searching models: ', error);
-      deferred.reject('Errors checking for existing relations for target model %s with id: ', targetModel.modelName, idToSearch);
+      deferred.reject('Errors checking for existing relations for target model %s with id: ',
+        targetModel.modelName, idToSearch);
     });
 
   return deferred.promise;

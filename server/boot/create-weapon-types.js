@@ -7,28 +7,28 @@ module.exports = function (app) {
 
     app.models.WeaponType.create([
       {
-        "name": "Pistol",
-        "sortOrder": 1
+        name: 'Pistol',
+        sortOrder: 1
       },
       {
-        "name": "Submachine gun",
-        "sortOrder": 2
+        name: 'Submachine gun',
+        sortOrder: 2
       },
       {
-        "name": "Shotgun",
-        "sortOrder": 3
+        name: 'Shotgun',
+        sortOrder: 3
       },
       {
-        "name": "Assault rifle",
-        "sortOrder": 4
+        name: 'Assault rifle',
+        sortOrder: 4
       },
       {
-        "name": "Sniper rifle",
-        "sortOrder": 5
+        name: 'Sniper rifle',
+        sortOrder: 5
       },
       {
-        "name": "Rocket launcher",
-        "sortOrder": 6
+        name: 'Rocket launcher',
+        sortOrder: 6
       }
     ], function (err, weaponTypes) {
       if (err) {

@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   restApiRoot: '/api',
   host: process.env.OPENSHIFT_NODEJS_IP || 'localhost',
