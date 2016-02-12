@@ -1,5 +1,6 @@
 'use strict';
 
+var log = require('./../middleware/logger');
 var relationValidator = require('./../lib/relation-validator.js');
 var itemsFinder = require('./../lib/items-finder.js');
 
@@ -38,7 +39,7 @@ module.exports = function (AbstractItem) {
         cb(null, items);
       })
       .catch(function (error) {
-        console.log('error retrieving items ', error);
+        log.error('error retrieving items ', error);
         cb(null, []);
       });
 
@@ -50,7 +51,7 @@ module.exports = function (AbstractItem) {
       accepts: {arg: 'filter', type: 'string'},
       returns: {
         type: 'array',
-        root: true // the array is not wrappe in a json object, see https://docs.strongloop.com/display/public/LB/Remote+methods#Remotemethods-Settingaremotemethodroute
+        root: true // the array is not wrapped in a json object, see https://docs.strongloop.com/display/public/LB/Remote+methods#Remotemethods-Settingaremotemethodroute
       },
       http: {verb: 'get', path: '/'}
     }
