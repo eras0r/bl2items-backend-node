@@ -4,6 +4,7 @@
   },
   "initial": {
     "compression": {},
+    "morgan": {"params": ["combined"]},
     "cors": {
       "params": {
         "origin": true,
