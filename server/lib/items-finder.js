@@ -3,6 +3,7 @@
 var Q = require('q');
 
 var app = require('../../server/server');
+var log = require('./../middleware/logger');
 
 /**
  * Loads all weapons by applying the given filter.
@@ -49,7 +50,7 @@ exports.findItems = function (filter) {
       deferred.resolve(items);
     })
     .catch(function (error) {
-      console.log('error retrieving items ', error);
+      log.error('error retrieving items ', error);
       deferred.reject(error);
     });
 
@@ -81,7 +82,7 @@ exports.countItems = function (filter) {
       deferred.resolve(totalCount);
     })
     .catch(function (error) {
-      console.log('error counting items ', error);
+      log.error('error counting items ', error);
       deferred.reject(error);
     });
 
