@@ -1,3 +1,9 @@
+'use strict';
+
+var log = require('./middleware/logger');
+
+log.info('loading datasource for environment "production"');
+
 module.exports = {
   mongoDb: {
     connector: 'mongodb',
