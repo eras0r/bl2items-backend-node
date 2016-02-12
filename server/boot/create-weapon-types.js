@@ -1,3 +1,7 @@
+'use strict';
+
+var log = require('./../middleware/logger');
+
 module.exports = function (app) {
 
   app.dataSources.mongoDb.automigrate('WeaponType', function (err) {
@@ -35,7 +39,7 @@ module.exports = function (app) {
         throw err;
       }
 
-      console.log('WeaponTypes created: \n', weaponTypes);
+      log.debug('Number of WeaponType created: %d', Object.keys(weaponTypes).length);
     });
 
   });

@@ -1,3 +1,7 @@
+'use strict';
+
+var log = require('./../middleware/logger');
+
 module.exports = function (app) {
 
   app.dataSources.mongoDb.automigrate('Rarity', function (err) {
@@ -51,7 +55,7 @@ module.exports = function (app) {
         throw err;
       }
 
-      console.log('Models created: \n', rarities);
+      log.debug('Number of Rarity created: %d', Object.keys(rarities).length);
     });
 
   });

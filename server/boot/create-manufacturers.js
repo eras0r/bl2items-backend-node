@@ -1,3 +1,7 @@
+'use strict';
+
+var log = require('./../middleware/logger');
+
 module.exports = function (app) {
 
   app.dataSources.mongoDb.automigrate('Manufacturer', function (err) {
@@ -22,7 +26,7 @@ module.exports = function (app) {
         throw err;
       }
 
-      console.log('Models created: \n', manufacturers);
+      log.debug('Number of Manufacturer created: %d', Object.keys(manufacturers).length);
     });
 
   });
