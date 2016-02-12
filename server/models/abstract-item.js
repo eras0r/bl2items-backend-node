@@ -58,6 +58,32 @@ module.exports = function (AbstractItem) {
     }
   );
 
+  AbstractItem.countItems = function (filter, cb) {
+
+    // use the itemsFinder to merge all items
+    itemsFinder.countItems(filter)
+      .then(function (items) {
+        cb(null, items);
+      })
+      .catch(function (error) {
+        log.error('error counting items ', error);
+        cb(null, []);
+      });
+
+  };
+
+  AbstractItem.remoteMethod(
+    'countItems',
+    {
+      accepts: {arg: 'filter', type: 'string'},
+      returns: {
+        arg: 'count',
+        type: 'object'
+      },
+      http: {verb: 'get', path: '/count'}
+    }
+  );
+
 };
 
 module.exports.validateItem = function (Item) {
