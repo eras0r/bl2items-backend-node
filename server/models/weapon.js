@@ -10,5 +10,6 @@ module.exports = function (Weapon) {
 
   // performing model weapon validation
   relationValidator.validateRelation(Weapon, 'weaponTypeId', 'WeaponType');
+  relationValidator.validateRelation(Weapon, 'damageTypeId', 'DamageType');
 
 };
