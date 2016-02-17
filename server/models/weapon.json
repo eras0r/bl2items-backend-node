@@ -53,7 +53,18 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "damageType": {
+      "type": "belongsTo",
+      "model": "DamageType",
+      "foreignKey": "damageTypeId"
+    },
+    "weaponType": {
+      "type": "belongsTo",
+      "model": "WeaponType",
+      "foreignKey": "weaponTypeId"
+    }
+  },
   "acls": [],
   "methods": {}
 }
