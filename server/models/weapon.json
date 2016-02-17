@@ -7,6 +7,11 @@
     "validateUpsert": true
   },
   "properties": {
+    "itemtype": {
+      "type": "string",
+      "required": true,
+      "default": "weapon"
+    },
     "damage": {
       "type": "number",
       "required": true

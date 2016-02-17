@@ -7,6 +7,10 @@
     "validateUpsert": true
   },
   "properties": {
+    "itemtype": {
+      "type": "string",
+      "required": true
+    },
     "level": {
       "type": "number",
       "required": true
