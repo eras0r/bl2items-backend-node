@@ -4,6 +4,19 @@ var Q = require('q');
 
 var app = require('../../server/server');
 var log = require('./../middleware/logger');
+var _ = require('lodash');
+
+/**
+ * Removes non allowed includes from the given filter. If filter.include contains a value that is not present in
+ * allowdeIncludes, this include will be removed from the filter.
+ * @param filter the filter which contains the includes
+ * @param allowedIncludes array containing all allowed includes
+ */
+function removeNonAllowedIncludes(filter, allowedIncludes) {
+  if (filter && filter.include) {
+    filter.include = _.intersection(filter.include, allowedIncludes);
+  }
+}
 
 /**
  * Loads all weapons by applying the given filter.
@@ -11,6 +24,8 @@ var log = require('./../middleware/logger');
  * @returns {*} a promise which will contain an array of all retrieved weapons upon fulfillment.
  */
 function loadWeapons(filter) {
+  var allowedIncludes = ['manufacturer', 'rarity', 'damageType', 'weaponType'];
+  removeNonAllowedIncludes(filter, allowedIncludes);
   return app.models.Weapon.find(filter);
 }
 
@@ -20,6 +35,8 @@ function loadWeapons(filter) {
  * @returns {*} a promise which will contain an array of all retrieved shields upon fulfillment.
  */
 function loadShields(filter) {
+  var allowedIncludes = ['manufacturer', 'rarity'];
+  removeNonAllowedIncludes(filter, allowedIncludes);
   return app.models.Shield.find(filter);
 }
 
