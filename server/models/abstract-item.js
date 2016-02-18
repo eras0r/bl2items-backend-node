@@ -48,7 +48,7 @@ module.exports = function (AbstractItem) {
   AbstractItem.remoteMethod(
     'listItems',
     {
-      accepts: {arg: 'filter', type: 'string'},
+      accepts: {arg: 'filter', type: 'object'},
       returns: {
         type: 'array',
         // see https://docs.strongloop.com/display/public/LB/Remote+methods#Remotemethods-Settingaremotemethodroute
