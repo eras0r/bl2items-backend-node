@@ -8,36 +8,38 @@ var _ = require('lodash');
 
 /**
  * Removes non allowed includes from the given filter. If filter.include contains a value that is not present in
- * allowdeIncludes, this include will be removed from the filter.
+ * the given model's relations, this include will be removed from the filter.
  * @param filter the filter which contains the includes
- * @param allowedIncludes array containing all allowed includes
+ * @param model The model which will be filtered
  */
-function removeNonAllowedIncludes(filter, allowedIncludes) {
+function removeNonAllowedIncludes(filter, model) {
+  log.debug('Looking for relations with of model "%s"', model.modelName);
+  var allowedIncludes = [];
+
+  // get relations from model and determine allowedIncludes
+  var relations = model.relations;
+  for (var relKey in relations) {
+    if (relations.hasOwnProperty(relKey)) {
+      log.debug('Adding relation key "%s" to allowedIncludes.', relKey);
+      allowedIncludes.push(relKey);
+    }
+  }
+
   if (filter && filter.include) {
     filter.include = _.intersection(filter.include, allowedIncludes);
   }
 }
 
 /**
- * Loads all weapons by applying the given filter.
+ * Loads all items by applying the given filter.
+ * @param model the base model to load the items from (sub-model of AbstractItem)
  * @param filter the filter to be applied.
- * @returns {*} a promise which will contain an array of all retrieved weapons upon fulfillment.
+ * @returns {*} a promise which will contain an array of all retrieved items of the given model filtered by the
+ * given filter upon fulfillment.
  */
-function loadWeapons(filter) {
-  var allowedIncludes = ['manufacturer', 'rarity', 'damageType', 'weaponType'];
-  removeNonAllowedIncludes(filter, allowedIncludes);
-  return app.models.Weapon.find(filter);
-}
-
-/**
- * Loads all shields by applying the given filter.
- * @param filter the filter to be applied.
- * @returns {*} a promise which will contain an array of all retrieved shields upon fulfillment.
- */
-function loadShields(filter) {
-  var allowedIncludes = ['manufacturer', 'rarity'];
-  removeNonAllowedIncludes(filter, allowedIncludes);
-  return app.models.Shield.find(filter);
+function loadItems(model, filter) {
+  removeNonAllowedIncludes(filter, model);
+  return model.find(filter);
 }
 
 /**
@@ -50,8 +52,8 @@ exports.findItems = function (filter) {
   var deferred = Q.defer();
 
   Q.all([
-      loadWeapons(filter),
-      loadShields(filter)
+      loadItems(app.models.Weapon, filter),
+      loadItems(app.models.Shield, filter)
     ])
     .then(function (promiseResults) {
       var items = [];
@@ -63,6 +65,8 @@ exports.findItems = function (filter) {
           items.push(item);
         });
       });
+
+      log.debug('found %d items', items.length);
 
       deferred.resolve(items);
     })
