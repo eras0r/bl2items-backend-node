@@ -9,25 +9,37 @@ var _ = require('lodash');
 /**
  * Removes non allowed includes from the given filter. If filter.include contains a value that is not present in
  * the given model's relations, this include will be removed from the filter.
- * @param filter the filter which contains the includes
  * @param model The model which will be filtered
+ * @param filter the filter which contains the includes
+ * @return the adjusted filter
  */
-function removeNonAllowedIncludes(filter, model) {
-  log.debug('Looking for relations with of model "%s"', model.modelName);
-  var allowedIncludes = [];
+function getFilter(model, filter) {
+  if (!filter) {
+    return null;
+  }
 
-  // get relations from model and determine allowedIncludes
-  var relations = model.relations;
-  for (var relKey in relations) {
-    if (relations.hasOwnProperty(relKey)) {
-      log.debug('Adding relation key "%s" to allowedIncludes.', relKey);
-      allowedIncludes.push(relKey);
+  // make e clone as the same filter instance is being used for all entities
+  var adjustedFilter = _.clone(filter);
+
+  if (adjustedFilter && adjustedFilter.include) {
+    log.debug('filter.include has been found. Removing non exsiting included now.');
+    var allowedIncludes = [];
+
+    // get relations from model and determine allowedIncludes
+    log.debug('Looking for relations with of model "%s"', model.modelName);
+    var relations = model.relations;
+    for (var relKey in relations) {
+      if (relations.hasOwnProperty(relKey)) {
+        log.debug('Adding relation key "%s" to allowedIncludes.', relKey);
+        allowedIncludes.push(relKey);
+      }
     }
+
+    // remove includes without relations
+    adjustedFilter.include = _.intersection(adjustedFilter.include, allowedIncludes);
   }
 
-  if (filter && filter.include) {
-    filter.include = _.intersection(filter.include, allowedIncludes);
-  }
+  return adjustedFilter;
 }
 
 /**
@@ -38,8 +50,7 @@ function removeNonAllowedIncludes(filter, model) {
  * given filter upon fulfillment.
  */
 function loadItems(model, filter) {
-  removeNonAllowedIncludes(filter, model);
-  return model.find(filter);
+  return model.find(getFilter(model, filter));
 }
 
 /**
