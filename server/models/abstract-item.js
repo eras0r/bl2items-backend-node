@@ -14,75 +14,45 @@ module.exports = function (AbstractItem) {
   AbstractItem.disableRemoteMethod('updateAttributes', false);     // Removes (PUT) /abstract-items/:id
   AbstractItem.disableRemoteMethod('createChangeStream', true);    // removes (GET|POST) /abstract-items/change-stream
 
-  AbstractItem.disableRemoteMethod('find', true);
+  //AbstractItem.disableRemoteMethod('find', true);
   AbstractItem.disableRemoteMethod('findById', true);
   AbstractItem.disableRemoteMethod('findOne', true);
 
-  AbstractItem.disableRemoteMethod('count', true);
+  //AbstractItem.disableRemoteMethod('count', true);
   AbstractItem.disableRemoteMethod('exists', true);
 
   AbstractItem.disableRemoteMethod('__get__manufacturer', false);
   AbstractItem.disableRemoteMethod('__get__rarity', false);
 
-  /**
-   * Lists all items by merging all models which extend the AbstractItem model
-   * Unfortunately this cannot be done by simply overriding the find method. Because the find method is being invoked by
-   * the extending models as well, which would lead to a stack overflow error
-   * @param filter Filter defining fields, where, include, order, offset, and limit
-   * @param cb the callback
-   */
-  AbstractItem.listItems = function (filter, cb) {
+  AbstractItem.on('dataSourceAttached', function (obj) {
 
-    // use the itemsFinder to merge all items
-    itemsFinder.findItems(filter)
-      .then(function (items) {
-        cb(null, items);
-      })
-      .catch(function (error) {
-        log.error('error retrieving items ', error);
-        cb(null, []);
-      });
+    // override find method in model
+    AbstractItem.find = function (filter, cb) {
+      // use the itemsFinder to merge all items
+      itemsFinder.findItems(filter)
+        .then(function (items) {
+          cb(null, items);
+        })
+        .catch(function (error) {
+          log.error('error retrieving items ', error);
+          cb(null, []);
+        });
+    };
 
-  };
+    // override count method in model
+    AbstractItem.count = function (filter, cb) {
+      // use the itemsFinder to merge all items
+      itemsFinder.countItems(filter)
+        .then(function (items) {
+          cb(null, items);
+        })
+        .catch(function (error) {
+          log.error('error counting items ', error);
+          cb(null, []);
+        });
+    };
 
-  AbstractItem.remoteMethod(
-    'listItems',
-    {
-      accepts: {arg: 'filter', type: 'object'},
-      returns: {
-        type: 'array',
-        // see https://docs.strongloop.com/display/public/LB/Remote+methods#Remotemethods-Settingaremotemethodroute
-        root: true // the array is not wrapped in a json object,
-      },
-      http: {verb: 'get', path: '/'}
-    }
-  );
-
-  AbstractItem.countItems = function (filter, cb) {
-
-    // use the itemsFinder to merge all items
-    itemsFinder.countItems(filter)
-      .then(function (items) {
-        cb(null, items);
-      })
-      .catch(function (error) {
-        log.error('error counting items ', error);
-        cb(null, []);
-      });
-
-  };
-
-  AbstractItem.remoteMethod(
-    'countItems',
-    {
-      accepts: {arg: 'filter', type: 'string'},
-      returns: {
-        arg: 'count',
-        type: 'object'
-      },
-      http: {verb: 'get', path: '/count'}
-    }
-  );
+  });
 
 };
 
