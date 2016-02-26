@@ -20,10 +20,17 @@
     "roles": {
       "type": "hasMany",
       "model": "Bl2Role",
-      "through": "Bl2RoleMapping",
-      "foreignKey": "principalId"
+      "foreignKey": "principalId",
+      "through": "Bl2RoleMapping"
     }
   },
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    }
+  ],
   "methods": {}
 }
