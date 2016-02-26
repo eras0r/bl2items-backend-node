@@ -1,0 +1,20 @@
+{
+  "name": "Bl2AccessToken",
+  "plural": "access-tokens",
+  "base": "AccessToken",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "Bl2User",
+      "foreignKey": "userId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

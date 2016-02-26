@@ -1,0 +1,29 @@
+{
+  "name": "Bl2User",
+  "plural": "users",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "accessTokens": {
+      "type": "hasMany",
+      "model": "Bl2AccessToken",
+      "foreignKey": "userId",
+      "options": {
+        "disableInclude": true
+      }
+    },
+    "roles": {
+      "type": "hasMany",
+      "model": "Bl2Role",
+      "through": "Bl2RoleMapping",
+      "foreignKey": "principalId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

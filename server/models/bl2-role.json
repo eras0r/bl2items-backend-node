@@ -1,0 +1,20 @@
+{
+  "name": "Bl2Role",
+  "plural": "roles",
+  "base": "Role",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "principals": {
+      "type": "hasMany",
+      "model": "Bl2RoleMapping",
+      "foreignKey": "roleId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

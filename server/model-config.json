@@ -13,22 +13,7 @@
       "./mixins"
     ]
   },
-  "User": {
-    "dataSource": "db"
-  },
-  "AccessToken": {
-    "dataSource": "db",
-    "public": false
-  },
   "ACL": {
-    "dataSource": "db",
-    "public": false
-  },
-  "RoleMapping": {
-    "dataSource": "db",
-    "public": false
-  },
-  "Role": {
     "dataSource": "db",
     "public": false
   },
@@ -59,5 +44,21 @@
   "Shield": {
     "dataSource": "mongoDb",
     "public": true
+  },
+  "Bl2AccessToken": {
+    "dataSource": "mongoDb",
+    "public": false
+  },
+  "Bl2Role": {
+    "dataSource": "mongoDb",
+    "public": false
+  },
+  "Bl2User": {
+    "dataSource": "mongoDb",
+    "public": true
+  },
+  "Bl2RoleMapping": {
+    "dataSource": "mongoDb",
+    "public": false
   }
 }
