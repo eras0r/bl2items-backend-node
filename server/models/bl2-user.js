@@ -36,7 +36,7 @@ module.exports = function (Bl2User) {
 
         if (!role) {
           error = new Error('Role ' + roleName + ' not found.');
-          error['http_code'] = 404;
+          error.statusCode = 404;
           return callback(error);
         }
 
@@ -114,7 +114,7 @@ module.exports = function (Bl2User) {
 
         if (!role) {
           error = new Error('Role ' + roleName + ' not found.');
-          error['http_code'] = 404;
+          error.statusCode = 404;
           return callback(error);
         }
 
