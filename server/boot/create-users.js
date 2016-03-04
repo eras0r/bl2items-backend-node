@@ -4,7 +4,7 @@ var log = require('./../middleware/logger');
 
 module.exports = function (app) {
 
-  if (process.env.NODE_ENV === 'development') {
+  //if (process.env.NODE_ENV === 'development') {
 
     var User = app.models.Bl2User;
     var Role = app.models.Bl2Role;
@@ -67,6 +67,6 @@ module.exports = function (app) {
 
     });
 
-  }
+  //}
 
 };
