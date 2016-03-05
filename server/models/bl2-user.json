@@ -21,7 +21,8 @@
       "type": "hasMany",
       "model": "Bl2Role",
       "foreignKey": "principalId",
-      "through": "Bl2RoleMapping"
+      "through": "Bl2RoleMapping",
+      "keyThrough": "roleId"
     }
   },
   "acls": [
