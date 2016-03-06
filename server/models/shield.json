@@ -7,7 +7,7 @@
     "validateUpsert": true
   },
   "properties": {
-    "itemtype": {
+    "itemType": {
       "type": "string",
       "required": true,
       "default": "shield"
